@@ -1,0 +1,79 @@
+void move_foward();
+void move_backward();
+void random_move();
+
+
+int counter=0;
+
+int left_motor= 0;
+
+int right_motor= 3;
+
+int motor_speed= 50;
+
+int main()   
+{
+    while(1)  //endless loop 
+    {
+        shut_down_in(300);    //shut down 5:00 
+        
+         move_foward(); 
+        
+         if(digital(0)==1) // left touch       
+         {
+             
+           move_backward();
+       counter=counter+1;
+         }    
+        
+        if(digital(9)==1) //right touch
+        {   
+           
+ 			move_backward(); // move back and turn 
+            counter=counter+1;
+            
+        }
+       
+        if(counter==5)
+        {     
+           
+            random_move(); // move back and left and back agian 
+            counter=0;
+        }
+ 
+    }
+
+    printf("loop ended \n");
+    return 0;
+}
+
+void move_foward()
+{
+    motor(left_motor, motor_speed);
+    motor(right_motor, motor_speed); //foward
+}
+
+void move_backward()
+{
+    motor(left_motor,- motor_speed);
+    motor(right_motor,- motor_speed);  // back 
+    msleep(1000);
+     motor(left_motor, motor_speed);  //left turn 
+    motor(right_motor, -motor_speed);
+    msleep(800);
+    ao();
+}
+void random_move()
+{
+    motor(left_motor,- motor_speed); // reverse  
+    motor(right_motor,- motor_speed); //reverse  
+    msleep(100);
+     motor(left_motor,- motor_speed);  // turn left 
+    motor(right_motor, motor_speed);
+    msleep(800);
+    
+    motor(left_motor,- motor_speed);
+    motor(right_motor,- motor_speed);// reverse
+    msleep(1200);
+    ao();
+}
